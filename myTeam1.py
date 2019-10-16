@@ -798,17 +798,20 @@ class DefensiveAgent(OffensiveAgent):
         enemy1, enemy2 = self.enemyHistory[-1]
         if enemy1[1] > enemy2[1] or (enemy1[1] == enemy2[1] and enemy1[2] <= enemy2[2]):
             if not self.isAtHome(enemy2[0], gameState):
-                enemylist = [enemy1, enemy1]
+                enemylist = [enemy1]
             else:
                 enemylist = [enemy1, enemy2]
         else:
             if not self.isAtHome(enemy1[0], gameState):
-                enemylist = [enemy2, enemy2]
+                enemylist = [enemy2]
             else:
                 enemylist = [enemy2, enemy1]
 
         if self.choice == [False, False]:
-            if self.index < self.teammate:
+            if len(enemylist) == 1:
+                enemy = enemylist[0]
+                enemy_teammate = enemylist[0]
+            elif self.index < self.teammate:
                 enemy = enemylist[0]
                 enemy_teammate = enemylist[1]
             else:
