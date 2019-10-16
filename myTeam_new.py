@@ -132,6 +132,10 @@ class BasicAgent(CaptureAgent):
 
     def registerInitialState(self, gameState):
         CaptureAgent.registerInitialState(self, gameState)
+        
+        """
+        OFFENSIVE PART 1
+        """
         self.startGameState = gameState
         self.homeBoundary = self.getHomeList(gameState)
         self.gridMap = {}
@@ -150,7 +154,11 @@ class BasicAgent(CaptureAgent):
         self.debugDrawDFS()
 
         self.foodFactor = pow(self.getFoodNum(gameState), 0.5)
-
+        
+        
+        """
+        DEFENSIVE PART 1
+        """
         self.teammate = self.getTeam(gameState)[1 - self.getTeam(gameState).index(self.index)]
         self.start = gameState.getAgentPosition(self.index)
         self.food = self.getFood(gameState)
@@ -160,6 +168,11 @@ class BasicAgent(CaptureAgent):
         self.enemyHistory = [[((gameState.data.layout.width - self.start[0] - 1, gameState.data.layout.height - self.start[1] - 1), 0, 1), ((gameState.data.layout.width - gameState.getAgentPosition(self.teammate)[0] - 1, gameState.data.layout.height - gameState.getAgentPosition(self.teammate)[1] - 1), 0, 1)]]
         self.choice = [True, True]
 
+        
+    
+    """
+    OFFENSIVE PART 2
+    """
     """
     Grid mapping
     """
@@ -482,6 +495,11 @@ class BasicAgent(CaptureAgent):
 
     def isAtOpponent(self, state, gameState):
         return not self.isAtHome(state, gameState)
+    
+    
+    """
+    OFFENSIVE PART 2
+    """
 
     def deadList(self):
         return [state for state in self.gridMap if self.gridMap[state] == 'dead']
@@ -606,6 +624,9 @@ class BasicAgent(CaptureAgent):
             else:
                 self.enemyHistory.append([(enemy1[0], enemy1[1], enemy1[2] + 1), (enemy2[0], enemy2[1], enemy2[2] + 1)])
 
+"""
+OFFENSIVE PART 3
+"""
 
 class OffensiveAgent(BasicAgent):
   def chooseAction(self, gameState):
@@ -706,7 +727,9 @@ class OffensiveAgent(BasicAgent):
         return 999999
 
 
-
+"""
+DEFFENSIVE PART 3
+"""
 
 class DefensiveAgent(OffensiveAgent):
     def chooseAction(self, gameState):
